@@ -37,45 +37,107 @@ print(m[i][j])
 
 
 
+
+def checkSpaces(i,j,k):
+  choices = [0,0,0,0]
+  if i>0 and m[i-1][j] == 0 and a[i-1][j] == 0:# Up Check
+    choices[0] = 1
+
+  if j>0 and m[i][j-1] == 0 and a[i][j-1] == 0:# Left Check
+    choices[2] = 1
+
+
+  if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0: #Down Check
+    choices[1] = 1
+
+
+  if j<len(m[i])-1 and m[i][j+1] == 0 and a[i][j+1] == 0:# Right Check
+      choices[3] = 1
+  return choices
+      
+
+
 def make_step(k):
+  #         [up,down.left,right]
+
+  decisionLocations = []
   for i in range(len(m)):
     for j in range(len(m[i])):
       if m[i][j] == k:
-        if i>0 and m[i-1][j] == 0 and a[i-1][j] == 0:# Up Check
-          m[i-1][j] = k + 1
-          printMaze(m)
-          print()
+        choiceIndexs = checkSpaces(i,j,k)
+        if len(choiceIndexs) > 1:
+          print("split")
+          # save choice to list and chose a path to go down
 
-        if j>0 and m[i][j-1] == 0 and a[i][j-1] == 0:# Left Check
-          m[i][j-1] = k + 1
-          printMaze(m)
-          print()
+        elif len(choiceIndexs) is 0:
+          print('Hit a Wall')
+          # go back to last decision
+        else:
+           print('no Split and no wall')
+          #  continue down path
+         
+         
+        
 
-        if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0: #Down Check
-          m[i+1][j] = k + 1
-          printMaze(m)
-          print()
-        if j<len(m[i])-1 and m[i][j+1] == 0 and a[i][j+1] == 0:# Right Check
-            m[i][j+1] = k + 1
-            printMaze(m)
-            print()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        # if i>0 and m[i-1][j] == 0 and a[i-1][j] == 0:# Up Check
+        #   choices[0] = 1
+        #   # m[i-1][j] = k + 1
+        #   # printMaze(m)
+        #   # print()
+
+        # if j>0 and m[i][j-1] == 0 and a[i][j-1] == 0:# Left Check
+        #   choices[2] = 1
+        #   # m[i][j-1] = k + 1
+        #   # printMaze(m)
+        #   # print()
+
+        # if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0: #Down Check
+        #   choices[1] = 1
+        #   # m[i+1][j] = k + 1
+        #   # printMaze(m)
+        #   # print()
+        # if j<len(m[i])-1 and m[i][j+1] == 0 and a[i][j+1] == 0:# Right Check
+        #     choices[3] = 1
+        #     # m[i][j+1] = k + 1
+        #     # printMaze(m)
+        #     # print()
+
+        
 
 
 
 make_step(1)
-make_step(2)
-make_step(3)
-make_step(4)
-make_step(5)
-make_step(6)
-make_step(7)
-make_step(8)
-make_step(9)
-make_step(10)
-make_step(11)
-make_step(12)
-make_step(13)
-make_step(14)
-make_step(15)
-make_step(16)
+# make_step(2)
+# make_step(3)
+# make_step(4)
+# make_step(5)
+# make_step(6)
+# make_step(7)
+# make_step(8)
+# make_step(9)
+# make_step(10)
+# make_step(11)
+# make_step(12)
+# make_step(13)
+# make_step(14)
+# make_step(15)
+# make_step(16)
 printMaze(m)
