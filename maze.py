@@ -1,5 +1,5 @@
 a = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
     [1, 0, 1, 0, 1, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
@@ -31,58 +31,81 @@ for i in range(len(a)):
     m.append([])
     for j in range(len(a[i])):
         m[-1].append(0)
+
 i,j = start
+k=0
 m[i][j] = 1
 print(m[i][j])
 
+k = 1
 
+print(i)
+def checkSpaces(i,j):
 
-
-def checkSpaces(i,j,k):
-  #         [up,down.left,right]
-  choices = [0,0,0,0]
+  
+  #    [up,down.left,right]
+  # choices = [0,0,0,0]
   if i>0 and m[i-1][j] == 0 and a[i-1][j] == 0:# Up Check
-    choices[0] = 1
+    i = i - 1
+    print('up')
+    make_step(i,j)
+  
+  if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0: #Down Check
+    i = i + 1
+    print('down')
+    make_step(i,j)
 
   if j>0 and m[i][j-1] == 0 and a[i][j-1] == 0:# Left Check
-    choices[2] = 1
-
-
-  if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0: #Down Check
-    choices[1] = 1
-
+    j = j -1
+    print('left')
+    make_step(i,j)
 
   if j<len(m[i])-1 and m[i][j+1] == 0 and a[i][j+1] == 0:# Right Check
-      choices[3] = 1
-  return choices
+    j = j +1
+    print('right')
+    make_step(i,j)
+ 
       
 
+   
+   
 
-def make_step(k):
-
-  decisionLocations = []
-  for i in range(len(m)):
-    for j in range(len(m[i])):
-      if m[i][j] == k:
-        choiceIndexs = [index for index, value in enumerate(checkSpaces()) if value == 1]
-        if len(choiceIndexs) > 1:
-          print("split")
-          # save choice to list and chose a path to go down
-
-        elif len(choiceIndexs) is 0:
-          print('Hit a Wall')
-          # go back to last decision
-        else:
-           print('no Split and no wall')
-          #  continue down path
+def make_step(i,j):
+    global k
+    if (i,j) == end:
+      m[i][j] = "Completed"
+      
+      print('all done')
+      return 0
+    else:
+      m[i][j] = k=k+1
+       print(len(m), len(m[i]))
+       print(i,j)
+       checkSpaces(i,j)
+    # if m[i][j] == k:
+        # choiceIndexs = [value for  value in checkSpaces(i,j) if value != 0]
+        # if len(choiceIndexs) > 1:
+        #   print("split")
+        #   # save choice to list and chose a path to go down
+        #   decisionLocations.append(m[i][j])
+        # elif len(choiceIndexs) is 0:
+        #   print('Hit a Deadend')
+        #   # go back to last decision
+        # else:
+        #    print('no Split and no wall')
+        #   #  continue down path
          
          
+def startMaze():
+   global i,j
+   m[i][j] = 'start'
 
-        
+   make_step(i,j)
+  
 
 
-
-make_step(1)
+# m[2][5] = 'done'
+startMaze()
 # make_step(2)
 # make_step(3)
 # make_step(4)
