@@ -78,7 +78,7 @@ def make_step(i,j):
       print('all done')
       return 0
     else:
-      m[i][j] = k=k+1
+       m[i][j] = k=k+1
        print(len(m), len(m[i]))
        print(i,j)
        checkSpaces(i,j)
