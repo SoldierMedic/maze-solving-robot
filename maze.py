@@ -1,3 +1,7 @@
+from interface import *
+from time import sleep
+
+
 a = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
     [1, 0, 1, 0, 1, 0, 0, 0, 0, 1],
@@ -25,13 +29,15 @@ def printMaze(maze):
     if count != 0:
         print()
 
-
-m = []
-for i in range(len(a)):
+def createBlankMap(maze):
+  m=[]
+  for i in range(len(a)):
     m.append([])
     for j in range(len(a[i])):
         m[-1].append(0)
+  return m
 
+m = createBlankMap(a)
 i,j = start
 k=0
 m[i][j] = 1
@@ -67,20 +73,24 @@ def checkSpaces(i,j):
  
       
 
-   
+moveList= []
    
 
 def make_step(i,j):
-    global k
+    global k, moveList
     if (i,j) == end:
       m[i][j] = "Completed"
+      window.changeCellColor(i,j,'orangne','all Done')
       
       print('all done')
       return 0
     else:
+       sleep(0.25)
        m[i][j] = k=k+1
-       print(len(m), len(m[i]))
+       window.changeCellColor(i,j,'red',k)
+      #  print(len(m), len(m[i]))
        print(i,j)
+       moveList.append([j,i])
        checkSpaces(i,j)
     # if m[i][j] == k:
         # choiceIndexs = [value for  value in checkSpaces(i,j) if value != 0]
@@ -99,26 +109,34 @@ def make_step(i,j):
 def startMaze():
    global i,j
    m[i][j] = 'start'
-
+   print(i,j)
    make_step(i,j)
   
-
-
-# m[2][5] = 'done'
-startMaze()
-# make_step(2)
-# make_step(3)
-# make_step(4)
-# make_step(5)
-# make_step(6)
-# make_step(7)
-# make_step(8)
-# make_step(9)
-# make_step(10)
-# make_step(11)
-# make_step(12)
-# make_step(13)
-# make_step(14)
-# make_step(15)
-# make_step(16)
-printMaze(m)
+def resetMaze():
+  global i,j,k
+  i,j = start
+  k=0
+  m=createBlankMap(a)
+  window.resetMaze(start,end,a)
+global window
+window = MazeWindow(a,start,end,startMaze,resetMaze)
+window.mainloop()
+# # m[2][5] = 'done'
+# startMaze()
+# # make_step(2)
+# # make_step(3)
+# # make_step(4)
+# # make_step(5)
+# # make_step(6)
+# # make_step(7)
+# # make_step(8)
+# # make_step(9)
+# # make_step(10)
+# # make_step(11)
+# # make_step(12)
+# # make_step(13)
+# # make_step(14)
+# # make_step(15)
+# # make_step(16)
+# printMaze(m)
+print(moveList)
