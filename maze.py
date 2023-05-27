@@ -46,64 +46,44 @@ print(m[i][j])
 k = 1
 
 print(i)
-def checkSpaces(i,j):
 
   
-  #    [up,down.left,right]
-  # choices = [0,0,0,0]
-  if i>0 and m[i-1][j] == 0 and a[i-1][j] == 0:# Up Check
-    i = i - 1
-    print('up')
-    make_step(i,j)
-  
-  if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0: #Down Check
-    i = i + 1
-    print('down')
-    make_step(i,j)
-
-  if j>0 and m[i][j-1] == 0 and a[i][j-1] == 0:# Left Check
-    j = j -1
-    print('left')
-    make_step(i,j)
-
-  if j<len(m[i])-1 and m[i][j+1] == 0 and a[i][j+1] == 0:# Right Check
-    j = j +1
-    print('right')
-    make_step(i,j)
  
-      
+def colorTile(i,j):
+  m[i][j] = k
+  sleep(0.1)
+  window.changeCellColor(i,j,'red',k)
+  
 
 moveList= []
    
-
+done = False
 def make_step(i,j):
-    global k, moveList
-    if (i,j) == end:
-      m[i][j] = "Completed"
-      window.changeCellColor(i,j,'orangne','all Done')
-      
+    global k, moveList, done
+    print(f'Done: {done}')
+    if done is True:
+      return 
+    elif (i,j) == end:
+      done = True
+      window.changeCellColor(i,j,'orange','all Done')
       print('all done')
-      return 0
     else:
-       sleep(0.25)
-       m[i][j] = k=k+1
-       window.changeCellColor(i,j,'red',k)
-      #  print(len(m), len(m[i]))
+       colorTile(i ,j)
+       k+=1
        print(i,j)
        moveList.append([j,i])
-       checkSpaces(i,j)
-    # if m[i][j] == k:
-        # choiceIndexs = [value for  value in checkSpaces(i,j) if value != 0]
-        # if len(choiceIndexs) > 1:
-        #   print("split")
-        #   # save choice to list and chose a path to go down
-        #   decisionLocations.append(m[i][j])
-        # elif len(choiceIndexs) is 0:
-        #   print('Hit a Deadend')
-        #   # go back to last decision
-        # else:
-        #    print('no Split and no wall')
-        #   #  continue down path
+       if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0: #Down Check
+          print('down')
+          make_step(i+1 ,j)
+       if j>0 and m[i][j-1] == 0 and a[i][j-1] == 0:# Left Check
+          print('left')
+          make_step(i,j-1)
+       if i>0 and m[i-1][j] == 0 and a[i-1][j] == 0:# Up Check
+          print('up')
+          make_step(i-1,j)
+       if j<len(m[i])-1 and m[i][j+1] == 0 and a[i][j+1] == 0:# Right Check
+          print('right')
+          make_step(i,j+1)
          
          
 def startMaze():
@@ -113,9 +93,11 @@ def startMaze():
    make_step(i,j)
   
 def resetMaze():
-  global i,j,k
+  global i,j,k,done,moveList,m
   i,j = start
   k=0
+  done = False
+  moveList=[]
   m=createBlankMap(a)
   window.resetMaze(start,end,a)
 global window
