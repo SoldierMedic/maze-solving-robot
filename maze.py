@@ -3,7 +3,7 @@ from time import sleep
 
 
 a = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 1, 0, 1, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
@@ -51,7 +51,7 @@ print(i)
  
 def colorTile(i,j):
   m[i][j] = k
-  sleep(0.1)
+  sleep(0.5)
   window.changeCellColor(i,j,'red',k)
   
 
